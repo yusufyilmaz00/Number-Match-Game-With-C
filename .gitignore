@@ -1,3 +1,6 @@
 *.exe
 *.docx
 *.cpp
+*.txt
+TestVerileri/
+try.c
