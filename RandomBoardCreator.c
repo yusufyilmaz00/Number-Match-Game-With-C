@@ -8,7 +8,7 @@ void drawPath(int matris[][MAX]);
 int main(){
 	
 	
-	int i,j,numberRow,numberColumn,N=3,matrix[MAX][MAX];
+	int i,j,numberRow,numberColumn,N=5,matrix[MAX][MAX];
 	
 	for(i=0;i<N;i++){
 		for(j=0;j<N;j++){
@@ -17,8 +17,8 @@ int main(){
 	}
 	
 	srand(time(NULL));
-	// þuanda rastgele yerleþtiriyor
-	// fakat bazen çok yakýn olabiliyor
+	// suanda rastgele yerlestiriyor
+	// fakat bazen cok yakin olabiliyor
 	// bazen de yol olmayabiliyor.
 	
 	
@@ -35,10 +35,12 @@ int main(){
 	}
 	
 	
-	// ekrana bastýr
+	// ekrana bastir
 	drawBoard(matrix,N);
 	
 	drawPath(matrix);
+	drawBoard(matrix,N);
+	
 	return 0;
 }
 
@@ -59,49 +61,75 @@ void drawBoard(int matris[][MAX], int N){
 }
 
 void drawPath(int matris[][MAX]){
-	int i,j,k,x1,y1,x2,y2;
-	printf("X1:");
-	scanf(" %d",&x1);
-	printf("Y1:");
-	scanf(" %d",&y1);
-	printf("X2:");
-	scanf(" %d",&x2);
-	printf("Y2:");
-	scanf(" %d",&y2);
-		
-	while(x1-x2 !=0 && y1-y2 !=0 || x1==x2 && y1==y2){
+	int i,j,k,r1,c1,r2,c2;
+	printf("Row 1:");
+	scanf(" %d",&r1);
+	printf("Column 1:");
+	scanf(" %d",&c1);
+	printf("Row 2:");
+	scanf(" %d",&r2);
+	printf("Column 2:");
+	scanf(" %d",&c2);
+	// burayý do-while'a cevirelim.	
+	while(r1-r2 !=0 && c1-c2 !=0 || r1==r2 && c1==c2){
 		printf("Yalnizca bir eksende hareket edebilirsiniz\n");
-		printf("X1: ");
-		scanf("%d\n",&x1);
-		printf("Y1: ");
-		scanf("%d\n",&y1);
-		printf("X2: ");
-		scanf("%d\n",&x2);
-		printf("Y2: ");
-		scanf("%d\n",&y2);
+		printf("Row 1:");
+		scanf(" %d",&r1);
+		printf("Column 1:");
+		scanf(" %d",&c1);
+		printf("Row 2:");
+		scanf(" %d",&r2);
+		printf("Column 2:");
+		scanf(" %d",&c2);
 	}
 	
-	printf("\nSource: (%d,%d) ---> Destination: (%d,%d)\n",x1,y1,x2,y2);
+	printf("\nSource: (%d,%d) ---> Destination: (%d,%d)\n",r1,c1,r2,c2);
 	
-	if(x1-x2 !=0){
+	if(r1-r2 !=0){
+		// Yukarý-asagi yonde hareket
 		k= 1;
-		if(x1-x2>0)
+		if(r1-r2>0)
 			k= -1;
 		//process
-	}
-	elif(y1-y2 !=0){
-		k= 1;
-		if(y1-y2>0)
-			k= -1;
-		//process
-	}
-	/*
-	for(i=x1;i=x2;i+k){
-		for(j=y1;j=y2;j+k){
-			printf("%d,%d",i,j);
-			//matris[i][j] = matris[x1][y1];
-			// baþlangýç noktasýndaki sayý ile yolu dolduracaðýz  
+		i= r1+k;
+		
+		while(i != r2 + k && matris[i][c1] == 0 ){
+			
+			if(matris[i][c1] == matris[r1][c1]){
+				return; // sayilar eslestiyse duracak 
+			}
+			else if(matris[i][c1]==0){
+				matris[i][c1]= matris[r1][c1]; // bu adimda kaynaktaki sayiyi bu hucreye yerlestiriyoruz
+			}
+			else{
+				printf("Wrong Path, auto-undo running...");
+				//undo(koordinatlar);
+				return;
+			}
+			i += k;
 		}
 	}
-	*/
+	
+	else if(c1-c2 !=0){
+		// sag-sol yonunde hareket
+		k= 1;
+		if(c1-c2>0)
+			k= -1;
+		//process
+		j=c1+k;
+		while(j != c2 + k && matris[r1][j] == 0 ){
+			if(matris[r1][j]== matris[r1][c1]){
+				return; // bu adimda sayilar eslestigi icin fonksiyon duracak
+			}
+			else if(matris[r1][j]== 0){
+				matris[r1][j] = matris[r1][c1]; // bu adimda kaynaktaki sayiyi bu hucreye yerlestiriyoruz
+			}
+			else{
+				printf("Wrong Path, auto-undo running...");
+				//undo(koordinatlar);
+				return;
+			}
+			j += k;
+		}
+	}
 }
