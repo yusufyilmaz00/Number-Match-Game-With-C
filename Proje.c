@@ -52,3 +52,6 @@ void drawBoard(int matris[][MAX], int N){
                  printf("      |",matris[i][j]);
     }
 }
+
+
+
