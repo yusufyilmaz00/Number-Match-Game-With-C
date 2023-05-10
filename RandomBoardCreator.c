@@ -57,11 +57,13 @@ void drawBoard(int matris[][MAX], int N){
             else
                  printf("      |",matris[i][j]);
     }
-    printf("\n\n");
+    printf("\n");
 }
 
 void drawPath(int matris[][MAX]){
 	int i,j,k,r1,c1,r2,c2;
+	do{
+	printf("\nYalnizca bir eksende hareket edebilirsiniz\n\n");
 	printf("Row 1:");
 	scanf(" %d",&r1);
 	printf("Column 1:");
@@ -70,18 +72,7 @@ void drawPath(int matris[][MAX]){
 	scanf(" %d",&r2);
 	printf("Column 2:");
 	scanf(" %d",&c2);
-	// burayý do-while'a cevirelim.	
-	while(r1-r2 !=0 && c1-c2 !=0 || r1==r2 && c1==c2){
-		printf("Yalnizca bir eksende hareket edebilirsiniz\n");
-		printf("Row 1:");
-		scanf(" %d",&r1);
-		printf("Column 1:");
-		scanf(" %d",&c1);
-		printf("Row 2:");
-		scanf(" %d",&r2);
-		printf("Column 2:");
-		scanf(" %d",&c2);
-	}
+	}while(r1-r2 !=0 && c1-c2 !=0 || r1==r2 && c1==c2);
 	
 	printf("\nSource: (%d,%d) ---> Destination: (%d,%d)\n",r1,c1,r2,c2);
 	
