@@ -46,11 +46,15 @@ int main(){
 
 void drawBoard(int matris[][MAX], int N){
     int i,j,k;
+    printf("\n      |");
+    for(j=0;j<N;j++)
+			printf("  c%d  |",j);
     for(i=0;i<N;i++){
         printf("\n");
-        for (k=0;k<N;k++)
-            printf("-------");
+        for (k=0;k<=N;k++)
+            printf("------|");
         printf("\n");
+        printf("  r%d  |",i);
         for(j=0;j<N;j++)
             if (matris[i][j]!=0)
                 printf("  %d   |",matris[i][j]);
@@ -64,13 +68,13 @@ void drawPath(int matris[][MAX]){
 	int i,j,k,r1,c1,r2,c2;
 	do{
 	printf("\nYalnizca bir eksende hareket edebilirsiniz\n\n");
-	printf("Row 1:");
+	printf("Source-Row:");
 	scanf(" %d",&r1);
-	printf("Column 1:");
+	printf("Source-Column:");
 	scanf(" %d",&c1);
-	printf("Row 2:");
+	printf("Destination-Row:");
 	scanf(" %d",&r2);
-	printf("Column 2:");
+	printf("Destination-Column:");
 	scanf(" %d",&c2);
 	}while(r1-r2 !=0 && c1-c2 !=0 || r1==r2 && c1==c2);
 	
@@ -84,9 +88,10 @@ void drawPath(int matris[][MAX]){
 		//process
 		i= r1+k;
 		
-		while(i != r2 + k && matris[i][c1] == 0 ){
+		while(i != r2+k){
 			
 			if(matris[i][c1] == matris[r1][c1]){
+				printf("Sayýlar eslesti!\n");
 				return; // sayilar eslestiyse duracak 
 			}
 			else if(matris[i][c1]==0){
@@ -108,8 +113,9 @@ void drawPath(int matris[][MAX]){
 			k= -1;
 		//process
 		j=c1+k;
-		while(j != c2 + k && matris[r1][j] == 0 ){
+		while(j != c2+k){
 			if(matris[r1][j]== matris[r1][c1]){
+				printf("Sayilar eslesti!\n");
 				return; // bu adimda sayilar eslestigi icin fonksiyon duracak
 			}
 			else if(matris[r1][j]== 0){
