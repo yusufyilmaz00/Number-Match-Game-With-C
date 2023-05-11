@@ -2,5 +2,8 @@
 *.docx
 *.cpp
 *.txt
+*.jpg
+*.jpeg
+*.png
 TestVerileri/
 try.c
