@@ -3,13 +3,28 @@
 #include <time.h>
 #define MAX 15
 void drawBoard(int matris[][MAX], int N);
-int createRandomBoard(int matris[][MAX],int N);
-void drawPath(int matris[][MAX]);
+void createBoard(int matrix[][MAX],int N);
+void drawPath(int matris[][MAX],int N);
+
 int main(){
+	int i,j,N=5,matrix[MAX][MAX];
+	int moveHistory[10][4];
 	
+	createBoard(matrix,N);
+	drawBoard(matrix,N);
 	
-	int i,j,numberRow,numberColumn,N=5,matrix[MAX][MAX];
+	int totalMove;
+	int a=2;
+	while(a>0){
+		drawPath(matrix,N);
+		drawBoard(matrix,N);
+		--a;
+	}
 	
+	return 0;
+}
+void createBoard(int matrix[][MAX],int N){
+	int i,j,numberRow,numberColumn;
 	for(i=0;i<N;i++){
 		for(j=0;j<N;j++){
 			matrix[i][j]=0;
@@ -17,11 +32,6 @@ int main(){
 	}
 	
 	srand(time(NULL));
-	// suanda rastgele yerlestiriyor
-	// fakat bazen cok yakin olabiliyor
-	// bazen de yol olmayabiliyor.
-	
-	
 	for(i=1;i<=N;i++){
 		for(j=0;j<2;j++){
 			numberRow= rand() % N;
@@ -32,18 +42,8 @@ int main(){
 			}
 			matrix[numberRow][numberColumn]=i;
 		}
-	}
-	
-	
-	// ekrana bastir
-	drawBoard(matrix,N);
-	
-	drawPath(matrix);
-	drawBoard(matrix,N);
-	
-	return 0;
+	}	
 }
-
 void drawBoard(int matris[][MAX], int N){
     int i,j,k;
     printf("\n      |");
@@ -61,13 +61,16 @@ void drawBoard(int matris[][MAX], int N){
             else
                  printf("      |",matris[i][j]);
     }
-    printf("\n");
+    printf("\n\n");
 }
 
-void drawPath(int matris[][MAX]){
-	int i,j,k,r1,c1,r2,c2;
+void drawPath(int matris[][MAX],int N){
+	int i,j,k,r1,c1,r2,c2,is_true;
+	// **fonk içine bir de eslesen sayýlarýn counterini koy.
+	
 	do{
-	printf("\nYalnizca bir eksende hareket edebilirsiniz\n\n");
+	is_true=1;
+	printf("Yalnizca bir eksende hareket edebilirsiniz\n\n");
 	printf("Source-Row:");
 	scanf(" %d",&r1);
 	printf("Source-Column:");
@@ -76,9 +79,19 @@ void drawPath(int matris[][MAX]){
 	scanf(" %d",&r2);
 	printf("Destination-Column:");
 	scanf(" %d",&c2);
-	}while(r1-r2 !=0 && c1-c2 !=0 || r1==r2 && c1==c2);
+	if(r1>=N || r2>=N || c1>=N ||c2>=N || r1<0 || r2<0 || c1<0 || c2<0){
+		printf("\nKoordinatlar 0 ile (N-1) arasinda olmalidir !\n");
+		is_true =0;
+	}	
+	}while( r1-r2 !=0 && c1-c2 !=0  || r1==r2 && c1==c2 || is_true ==0 );
 	
 	printf("\nSource: (%d,%d) ---> Destination: (%d,%d)\n",r1,c1,r2,c2);
+	/*/hamle kaydedilecek
+	matrix[index][0] = r1;
+	matrix[index][1] = c1;
+	matrix[index][2] = r2;
+	matrix[index][3] = c2;
+	*/
 	
 	if(r1-r2 !=0){
 		// Yukarý-asagi yonde hareket
@@ -91,7 +104,8 @@ void drawPath(int matris[][MAX]){
 		while(i != r2+k){
 			
 			if(matris[i][c1] == matris[r1][c1]){
-				printf("Sayýlar eslesti!\n");
+				printf("Sayilar eslesti!\n");
+				// eslesen_Sayilar_counter -= 1;
 				return; // sayilar eslestiyse duracak 
 			}
 			else if(matris[i][c1]==0){
@@ -99,7 +113,7 @@ void drawPath(int matris[][MAX]){
 			}
 			else{
 				printf("Wrong Path, auto-undo running...");
-				//undo(koordinatlar);
+				//counter = undo(koordinatlar);
 				return;
 			}
 			i += k;
@@ -113,9 +127,11 @@ void drawPath(int matris[][MAX]){
 			k= -1;
 		//process
 		j=c1+k;
+		
 		while(j != c2+k){
 			if(matris[r1][j]== matris[r1][c1]){
 				printf("Sayilar eslesti!\n");
+				// eslesen_Sayilar_counter -= 1;
 				return; // bu adimda sayilar eslestigi icin fonksiyon duracak
 			}
 			else if(matris[r1][j]== 0){
@@ -130,3 +146,4 @@ void drawPath(int matris[][MAX]){
 		}
 	}
 }
+
