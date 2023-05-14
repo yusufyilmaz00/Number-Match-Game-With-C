@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 #define MAX 15
+
+void readFromFile(int matris[][MAX], char *fileName);
 void drawBoard(int matris[][MAX], int N);
 void createBoard(int matrix[][MAX],int N);
 void drawPath(int matris[][MAX],int N);
@@ -16,6 +18,19 @@ int main(){
 	gameMenu(matrix);
 	
 	return 0;
+}
+void readFromFile(int matris[][MAX], char *fileName){
+	int i,j, temp;
+	FILE *data = fopen(fileName,"r");
+	if(!data){
+        printf("Dosya Acilamadi!");
+		return;
+    }
+    while(!feof(data)){
+        fscanf(data,"%d %d %d\n",&i,&j,&temp);  
+		matris[i][j]=temp; 
+    }  
+  	fclose(data); 
 }
 
 void createBoard(int matrix[][MAX],int N){
@@ -39,6 +54,7 @@ void createBoard(int matrix[][MAX],int N){
 		}
 	}	
 }
+
 void drawBoard(int matris[][MAX], int N){
     int i,j,k;
     printf("\n      |");
@@ -209,3 +225,4 @@ void runGameManuel(int matris[][MAX],int N){
 		}		
 	}
 }
+void UNDO();
