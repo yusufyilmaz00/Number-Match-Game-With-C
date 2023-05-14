@@ -3,7 +3,7 @@
 #include <time.h>
 #define MAX 15
 
-void readFromFile(int matris[][MAX], char *fileName);
+void readFromFile(int matris[][MAX], char *fileName,int N);
 void drawBoard(int matris[][MAX], int N);
 void createBoard(int matrix[][MAX],int N);
 void drawPath(int matris[][MAX],int N);
@@ -19,8 +19,14 @@ int main(){
 	
 	return 0;
 }
-void readFromFile(int matris[][MAX], char *fileName){
-	int i,j, temp;
+void readFromFile(int matris[][MAX], char *fileName,int N){
+	int i,j,temp;
+	
+	for(i=0;i<N;i++){
+		for(j=0;j<N;j++){
+			matris[i][j]=0;
+		}
+	}
 	FILE *data = fopen(fileName,"r");
 	if(!data){
         printf("Dosya Acilamadi!");
@@ -186,15 +192,22 @@ void gameMenu(int matris[][MAX]){
 	        	scanf(" %s", &playerName);
 	        	printf("{%s} Tahta boyutunu giriniz: ",playerName);
 	        	scanf("%d",&N);
-	        	
+	        	char fileName[20];	
+				printf("Dosya Adini Giriniz");
+				scanf("%s",fileName);
+				readFromFile(matris, fileName,N);
+				runGameManuel(matris,N);
 				break;
+				
 			case 3:
 				printf("-3-\n");
 				break;
+				
 			case 4:
 				printf("| ~~ Cikis yapiliyor... ~~ |\n");
 				flag=0;
 				break;
+				
 			default:
 				printf("\ngecerli degerler giriniz !\n");
 		}
