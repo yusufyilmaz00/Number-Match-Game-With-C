@@ -5,24 +5,19 @@
 void drawBoard(int matris[][MAX], int N);
 void createBoard(int matrix[][MAX],int N);
 void drawPath(int matris[][MAX],int N);
+void runGameManuel(int matris[][MAX],int N);
+void gameMenu(int matris[][MAX]);
 
 int main(){
-	int i,j,N=5,matrix[MAX][MAX];
+	int i,j,matrix[MAX][MAX];
 	int moveHistory[10][4];
-	
-	createBoard(matrix,N);
-	drawBoard(matrix,N);
-	
 	int totalMove;
-	int a=2;
-	while(a>0){
-		drawPath(matrix,N);
-		drawBoard(matrix,N);
-		--a;
-	}
+	
+	gameMenu(matrix);
 	
 	return 0;
 }
+
 void createBoard(int matrix[][MAX],int N){
 	int i,j,numberRow,numberColumn;
 	for(i=0;i<N;i++){
@@ -146,4 +141,71 @@ void drawPath(int matris[][MAX],int N){
 		}
 	}
 }
+void gameMenu(int matris[][MAX]){
+	int menu,N,game=1,flag=1;
+	char playerName[40];
+	
+	while(flag==1){
+		printf("\n| ~~ Ana Menu ~~ |\n");
+		printf("\n1) Rastgele Matris Olustur:");
+		printf("\n2) Dosyadan Matris Olustur:");
+		printf("\n3) Kullanicinin Skorlarini Goster:");
+		printf("\n4) Cikis:\n");
+		scanf(" %d",&menu);
+		  
+		switch(menu){
+			case 1:
+				printf("| ~~ Rastgele Matris Modu ~~ |\n");
+				printf("Oyuncu ismini giriniz: ");
+	        	scanf(" %s", &playerName);
+	        	printf("{%s} Tahta boyutunu giriniz: ",playerName);
+	        	scanf("%d",&N);
+	        	createBoard(matris,N);
+	        	runGameManuel(matris,N);
+				break;
+				
+			case 2:
+				printf("| ~~ Dosya Okuma Modu ~~ |\n");
+				printf("Oyuncu ismini giriniz: ");
+	        	scanf(" %s", &playerName);
+	        	printf("{%s} Tahta boyutunu giriniz: ",playerName);
+	        	scanf("%d",&N);
+	        	
+				break;
+			case 3:
+				printf("-3-\n");
+				break;
+			case 4:
+				printf("| ~~ Cikis yapiliyor... ~~ |\n");
+				flag=0;
+				break;
+			default:
+				printf("\ngecerli degerler giriniz !\n");
+		}
+	}
+}
 
+void runGameManuel(int matris[][MAX],int N){
+	int game=1,yourMove;
+	printf("\nHamlenizi seciniz:\n1)Eslestir\n2)Geri Al\n3)Cikis\n\n");
+	while(game==1){
+		drawBoard(matris,N);
+		printf("\nHamleni Sec: ");
+		scanf(" %d:",&yourMove);
+		
+		switch(yourMove){
+			case 1:
+				drawPath(matris,N);
+				break;
+			case 2:
+				printf("UNDO yaptim\n");
+				break;
+			case 3:
+				printf("Cikis yapiliyor...\n");
+				game=0;
+				break;
+			default:
+				printf("\n [!!!] Gecerli degerler giriniz !\n\n");		
+		}		
+	}
+}
