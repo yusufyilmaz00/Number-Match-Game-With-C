@@ -211,6 +211,7 @@ void drawPath(int matris[][MAX],int moveHistory[][4],int N,int *moveCounter,int 
 			else{
 				printf("Wrong Path, auto-undo running...");
 				*moveCounter +=1;
+				
 				UNDO(matris,r1,j-k,r1,c1);
 				return;
 			}
