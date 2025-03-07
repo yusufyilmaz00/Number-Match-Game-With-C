@@ -1,13 +1,13 @@
 *.exe
 *.docx
 *.cpp
-*.txt
 *.jpg
 *.jpeg
-*.png
 *.pdf
 *.rar
 
 *.c
 
 !main.c
+!Project.c
+!TestVerileri/
