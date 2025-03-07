@@ -5,7 +5,9 @@
 *.jpg
 *.jpeg
 *.png
-TestVerileri/
-try.c
-variable.c
+*.pdf
+*.rar
 
+*.c
+
+!main.c
